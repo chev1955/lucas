@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+
+<h2 class="slim">{{ page.title }}</h2>
+<p class="slim gray" style="margin-bottom: 4rem;">
+	<span class="glyphicon glyphicon-time"></span>
+	{{ page.date | date_to_string }}
+	&nbsp;
+	<span class="glyphicon glyphicon-tag"></span>
+	{% include post_tags.html %}
+</p>
+
+{{ content }}
+
+
+
+<p style="margin-top: 7rem;">
+	{% include pages.html %}
+</p>

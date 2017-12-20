@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Java has libraries for connecting to and working with SQL databases built right in to the standard Java SDK. This article assumes some knowledge of Java, and...">
+	<title>Making the connection to MySQL with Java - 李立</title>
+	
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/custom.css">
+
+
+	<script src="/assets/js/jquery-1.11.3.js"></script>
+	<script src="/assets/js/bootstrap.js"></script>
+	<script src="/assets/js/custom.js"></script>
+</head>
+
+
+
+<body>
+	<header>
+	<div class="container">
+		<nav>
+			<ul>
+				<a href="/">
+					<li>
+						<img class="logo" src="/assets/img/profile.png">
+					</li>
+				</a>
+
+				<a class="" href="/service.html">
+					<li>
+						服务<br>
+						<span class="x-small slim">SERVICES</span>
+					</li>
+				</a>
+
+				<a class="" href="/blog/">
+					<li>
+						博客<br>
+						<span class="x-small slim">BLOG</span>
+					</li>
+				</a>
+
+				<a class="" href="/about.html">
+					<li>
+						关于<br>
+						<span class="x-small slim">ABOUT</span>
+					</li>
+				</a>
+			</ul>	
+		</nav>
+	</div>
+</header>
+
+	<div class="container clearance">
+		<section>
+			<h2 class="slim">Making the connection to MySQL with Java</h2>
+<p class="slim gray" style="margin-bottom: 4rem;">
+	<span class="glyphicon glyphicon-time"></span>
+	22 Apr 2017
+	&nbsp;
+	<span class="glyphicon glyphicon-tag"></span>
+	
+
+
+<span class="post-tags"><a href="/tags/#MySQL">#MySQL</a></span>,
+
+<span class="post-tags"><a href="/tags/#Java">#Java</a></span>
+
+</p>
+
+<p>Java has libraries for connecting to and working with SQL databases built right in to the standard Java SDK. This article assumes some knowledge of Java, and that you’re here to figure out how to work with a database<sup id="fnref:ref"><a href="#fn:ref" class="footnote">1</a></sup>.</p>
+
+<p>This is the code to connect to a MySQL database server on your own computer, hence the loopback ip. We’re pretending it has a database called <code class="highlighter-rouge">myDatabase</code> which has a table called <code class="highlighter-rouge">users</code> with some user data.</p>
+
+<!-- more -->
+
+<p>First we’ll select some data, then insert a new row, and then update an existing row, all with the same database and connection.</p>
+
+<p>Hopefully this will be enough to get you started. Once you have the basics, the rest is pretty self explanatory. You’re basically just using SQL statements you (probably) already know inside of Java.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//First, some imports. Be careful with the Date and Timestamp imports, there's a java.sql.Date class too:</span>
+
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Timestamp</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DBTest</span> <span class="o">{</span>
+
+<span class="c1">// Some variables:</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">db_ip</span> <span class="o">=</span> <span class="s">"127.0.0.1"</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">db_name</span> <span class="o">=</span> <span class="s">"myDatabase"</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">db_user</span> <span class="o">=</span> <span class="s">"username"</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">db_pass</span> <span class="o">=</span> <span class="s">"password"</span><span class="o">;</span>
+
+<span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">dbTest</span><span class="o">(){</span>
+
+<span class="c1">// Now, to connect:</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+    
+           <span class="n">conn</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="s">"jdbc:mysql://"</span> <span class="o">+</span> <span class="n">db_ip</span> <span class="o">+</span> <span class="s">":3306/"</span> <span class="o">+</span> <span class="n">db_name</span><span class="o">,</span> <span class="n">db_user</span><span class="o">,</span> <span class="n">db_pass</span><span class="o">);</span> 
+                                                 
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">//do something with the error</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Now we should have a connection, but it's foot to check that it isn't null, then select some data</span>
+
+
+    <span class="k">if</span><span class="o">(</span><span class="n">conn</span> <span class="o">!=</span>  <span class="kc">null</span><span class="o">){</span>
+
+    <span class="c1">//Let's get a list of users who live in the zip code 11111.</span>
+
+    <span class="n">String</span> <span class="n">zipToGet</span> <span class="o">=</span> <span class="s">"11111"</span><span class="o">;</span>
+
+    <span class="n">String</span> <span class="n">userQuery</span> <span class="o">=</span> <span class="s">"SELECT age, user_name, created_on FROM users WHERE zip = "</span> <span class="o">+</span> <span class="n">zipToGet</span><span class="o">;</span>
+
+    <span class="n">Statement</span> <span class="n">userStatement</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+
+    <span class="n">ResultSet</span> <span class="n">userResult</span> <span class="o">=</span> <span class="n">userStatement</span><span class="o">.</span><span class="na">exequteQuery</span><span class="o">(</span><span class="n">userQuery</span><span class="o">);</span>
+
+    <span class="c1">//Not to scary so far, right? in the userQuery we're saying we want the age, user_name, and created_on fields from the </span>
+    <span class="c1">//users table whenever the zip is the one we specified. This is just a MySQL statement.</span>
+
+
+    <span class="c1">//userResult will be null if something went wrong, or if there's just no result.</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">userResult</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+         <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span> <span class="c1">//hypothetical user class</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">userResult</span><span class="o">.</span><span class="na">hasNext</span><span class="o">(){</span>
+        <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"age"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"user_name"</span><span class="o">);</span>
+        <span class="n">Date</span> <span class="n">createdOn</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getTimestamp</span><span class="o">(</span><span class="s">"created_on"</span><span class="o">);</span> <span class="c1">//This returns a Timestamp, but it can be cast directly into a date</span>
+
+       <span class="c1">//Do stuff with this data:</span>
+       <span class="c1">//Using the hypothetical user class with what data we have</span>
+
+        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">(</span><span class="n">username</span><span class="o">);</span> 
+        <span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">createDate</span> <span class="o">=</span> <span class="n">createdOn</span><span class="o">;</span>
+        <span class="n">users</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+
+    <span class="k">for</span><span class="o">(</span><span class="n">user</span> <span class="o">:</span> <span class="n">users</span><span class="o">){</span>
+        <span class="c1">//do something with the users</span>
+    <span class="o">}</span>
+
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="c1">//here is where you put code to deal with no result from user query</span>
+    <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="c1">//Now we'll work on inserting new data into the database. Keep in mind that manipulating that data has no affect on the //database, for that we need to to create another statement:</span>
+
+<span class="n">PreparedStatement</span> <span class="n">insertStatement</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">String</span> <span class="n">insertString</span> <span class="o">=</span> <span class="s">"INSERT INTO users (user_name, created_on, age) VALUES (?,?,?)"</span><span class="o">;</span>
+<span class="k">if</span><span class="o">(</span><span class="n">conn</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+
+<span class="n">insert</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">insertString</span><span class="o">);</span> <span class="c1">//creates the statement</span>
+
+<span class="n">insert</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"newUserName); // 1 represents the position of the question mark we left in the insertString
+
+Date now = new Date();
+
+insert.setTimestamp(2, new Timestamp(now.getTime()); 
+
+insert.setInt(3, 28);
+
+insert.execute();
+
+insert.close();
+}
+ 
+//Now we've selected and inserted, we can also update:
+
+if(conn != null){
+
+String update = "</span><span class="n">UPDATE</span> <span class="n">users</span> <span class="n">SET</span> <span class="n">age</span> <span class="n">WHERE</span> <span class="n">user_name</span> <span class="o">=</span> <span class="err">'</span><span class="n">someUser</span><span class="err">'"</span><span class="o">;</span> 
+<span class="c1">//this assumes usernames are unique, usually would use an id number</span>
+
+<span class="n">Statement</span> <span class="n">updateStatement</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+
+<span class="n">updateStatement</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">update</span><span class="o">);</span>
+
+<span class="o">}</span>
+
+<span class="c1">//And of course close the connection when you're done:</span>
+
+<span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>There you have it. Java and MySQL.  You can use this example code as a basis to get you started on your project that requires you to connect to a MySQL database using Java.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:ref">
+      <p><a href="https://www.thoughtco.com/mysql-and-java-2694108">“MySQL and java”</a>, ThoughtCo. <a href="#fnref:ref" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+
+
+<p style="margin-top: 7rem;">
+	
+<a href="/2017/04/22/installing-mysql-on-macos.html"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+
+
+
+<a class="pull-right" href="/2017/04/22/setting-up-a-custom-domain-for-your-github-site.html"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+
+
+</p>
+
+		</section>
+	</div>
+
+	<footer>
+	<div class="container small">
+		&copy;
+		<span><script type="text/javascript">document.write(new Date().getFullYear());</script></span>
+		All Rights Reserved &sdot;
+
+		<a href="/stats.html"><span class="glyphicon glyphicon-stats"></span></a> &sdot;
+
+		<a href="mailto:lucas.li@sdchina.org.cn"><span class="glyphicon glyphicon-envelope"></span></a>
+
+
+		<span class="pull-right"><a href="javascript:;" onclick="chn()">中文</a> / <a href="javascript:;" onclick="eng()">English</a></span>
+	</div>
+</footer>
+</body>
+</html>

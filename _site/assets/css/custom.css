@@ -1,0 +1,176 @@
+
+header {
+	border-top: 7px solid #8b0000;
+	border-bottom: 1px solid #eee;
+	padding: 2em 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background: white;
+	height: 94px;
+	z-index: 100;
+}
+
+footer {
+	border-top: 1px solid #eee;
+	border-bottom: 4px solid #8b0000;
+	padding: 1em 0;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: white;
+	height: 50px;
+	z-index: 100;
+}
+
+section {
+	margin: 7rem 0;
+}
+a {
+	color: #8b0000;
+}
+a:hover {
+	color: gray;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+nav ul li {
+	list-style: none;
+	display: inline-block;
+	text-align: center;
+	line-height: 1;
+}
+nav a {
+	margin-right: 1.5em;
+}
+nav a:hover {
+	text-decoration: none;
+}
+
+blockquote {
+	font-weight: 200;
+	color: gray;
+}
+
+post img {
+	width: 300px;
+}
+
+.x-small {
+	font-size: 70%
+}
+.eng {
+	display: none;
+}
+
+.clearance {
+	margin-top: 94px;
+	margin-bottom: 50px;
+}
+.logo {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	vertical-align: bottom;
+}
+.logo:hover{
+	box-shadow: 0 0 10px #8b0000;
+}
+
+.active {
+	color: gray;
+}
+.slim {
+	font-weight: 200;
+}
+.page-title {
+	margin: 7rem 0;
+}
+.page-nav {
+	margin-top: 7rem;
+}
+.list-title {
+	margin-bottom: 2rem;
+}
+.item-title {
+	margin-top: 7rem;
+	margin-bottom: 2rem;
+}
+.item-title h2 a:hover {
+	text-decoration: none;
+}
+
+.gray {
+	color: gray;
+}
+.center {
+	text-align: center;
+}
+
+.footer-player {
+	height: 10;
+	background: eee;
+}
+
+
+
+ul.feature,
+ul.about-list {
+	margin: 0;
+	padding: 0;
+}
+ul.feature li img {
+	height: 70px;
+} 
+ul.feature li {
+	list-style: none;
+	margin: 0;
+	display: inline-block;
+	border-top: 4px solid white;
+	text-align: center;
+	width: 32.9%;
+	background: #eee;
+	padding: 1.5em 0;
+}
+ul.feature li:hover {
+	border-top: 4px solid #8b0000;
+}
+ul.about-list li {
+	list-style: none;
+	margin-bottom: 1rem;
+}
+
+.footnotes {
+	margin-top: 5rem;
+}
+.footnotes:before {
+	content: "References";
+	font-weight: bold;
+}
+.footnotes ol {
+	font-weight: 300;
+	margin-top: 1em;
+}
+.footnotes p {
+	margin: 0;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+/* Carousel base class */
+.carousel {
+	height: 440px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+	z-index: 10;
+}
+/* Declare heights because of positioning of img element */
+.carousel .item {
+	height: 440px;
+	background-color: #777;
+}

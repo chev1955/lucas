@@ -1,0 +1,33 @@
+---
+layout: default
+title: "标签"
+permalink: /tags/
+---
+
+
+<p class="page-title">
+	<span class="glyphicon glyphicon-tag"></span> &nbsp;
+	<strong>{{ page.title }}</strong>
+	<span class="slim x-small">/ TAGS</span>
+</p>
+
+<p style="margin-bottom: 7rem;">
+	{% for tag in site.tags %}
+	<a class="btn btn-xs btn-default" href="#{{ tag | first | slugize }}">#{{ tag | first }}</a></li>
+	{% endfor %}
+</p>
+
+
+{% for tag in site.tags %}
+{% capture tag_name %}{{ tag | first }}{% endcapture %}
+<p style="margin-top: 4rem;">
+	<a name="{{ tag_name | slugize }}"></a>
+	<span id="#{{ tag_name | slugize }}" class="slim gray">#{{ tag_name }}</span>
+	<ul>
+		{% for post in site.tags[tag_name] %}
+		<span class="gray slim pull-right">{{ post.date | date_to_string }}</span>
+		<li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li>
+		{% endfor %}
+	</ul>
+</p>
+{% endfor %}

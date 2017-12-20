@@ -1,0 +1,34 @@
+<header>
+	<div class="container">
+		<nav>
+			<ul>
+				<a href="{{ site.baseurl }}/">
+					<li>
+						<img class="logo" src="{{ site.baseurl }}/assets/img/profile.png">
+					</li>
+				</a>
+
+				<a class="{% if page.url contains 'service' %}active{% endif %}" href="{{ site.baseurl }}/service.html">
+					<li>
+						服务<br>
+						<span class="x-small slim">SERVICES</span>
+					</li>
+				</a>
+
+				<a class="{% if page.url contains 'blog' %}active{% endif %}" href="{{ site.baseurl }}/blog/">
+					<li>
+						博客<br>
+						<span class="x-small slim">BLOG</span>
+					</li>
+				</a>
+
+				<a class="{% if page.url contains 'about' %}active{% endif %}" href="{{ site.baseurl }}/about.html">
+					<li>
+						关于<br>
+						<span class="x-small slim">ABOUT</span>
+					</li>
+				</a>
+			</ul>	
+		</nav>
+	</div>
+</header>

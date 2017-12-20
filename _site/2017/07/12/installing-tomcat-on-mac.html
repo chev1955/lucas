@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Download Apache Tomcat on http://tomcat.apache.org. Select the latest version, and download the binary distribution of the core module in tar.gz.Unzip the ta...">
+	<title>Installing Tomcat on macOS Sierra - 李立</title>
+	
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/custom.css">
+
+
+	<script src="/assets/js/jquery-1.11.3.js"></script>
+	<script src="/assets/js/bootstrap.js"></script>
+	<script src="/assets/js/custom.js"></script>
+</head>
+
+
+
+<body>
+	<header>
+	<div class="container">
+		<nav>
+			<ul>
+				<a href="/">
+					<li>
+						<img class="logo" src="/assets/img/profile.png">
+					</li>
+				</a>
+
+				<a class="" href="/service.html">
+					<li>
+						服务<br>
+						<span class="x-small slim">SERVICES</span>
+					</li>
+				</a>
+
+				<a class="" href="/blog/">
+					<li>
+						博客<br>
+						<span class="x-small slim">BLOG</span>
+					</li>
+				</a>
+
+				<a class="" href="/about.html">
+					<li>
+						关于<br>
+						<span class="x-small slim">ABOUT</span>
+					</li>
+				</a>
+			</ul>	
+		</nav>
+	</div>
+</header>
+
+	<div class="container clearance">
+		<section>
+			<h2 class="slim">Installing Tomcat on macOS Sierra</h2>
+<p class="slim gray" style="margin-bottom: 4rem;">
+	<span class="glyphicon glyphicon-time"></span>
+	12 Jul 2017
+	&nbsp;
+	<span class="glyphicon glyphicon-tag"></span>
+	
+
+
+<span class="post-tags"><a href="/tags/#Java">#Java</a></span>
+
+</p>
+
+<p>Download Apache Tomcat on <a href="http://tomcat.apache.org">http://tomcat.apache.org</a>. Select the latest version, and download the binary distribution of the core module in <code class="highlighter-rouge">tar.gz</code>.</p>
+
+<p>Unzip the <code class="highlighter-rouge">tar.gz</code> file. You may use the freeware app <strong>Unarchiver</strong>, which is perfect for all kinds of compressed files.</p>
+
+<p>Move the unarchived folder to <code class="highlighter-rouge">/Library</code>. If you cannot find the <em>Library</em> folder, Go to <em>Finder &gt; Go &gt; Go to Folder…</em>, input <code class="highlighter-rouge">/Library</code> and click <strong>Go</strong>.</p>
+
+<!-- more -->
+
+<p>Rename it <code class="highlighter-rouge">Tomcat</code>.</p>
+
+<p>Change ownership of the <code class="highlighter-rouge">/Library/Tomcat</code> folder hierarchy:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo chown -R &lt;your_username&gt;/Library/Tomcat
+</code></pre></div></div>
+
+<p>Make all scripts executable:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo chmod +x /Library/Tomcat/bin/*.sh
+</code></pre></div></div>
+
+<p>Download the freeware app <strong>Tomcat Controller</strong>. Set up the Preferences as follows: Tomcat Home Directory <code class="highlighter-rouge">/Library/Tomcat</code>. Tomcat Port <code class="highlighter-rouge">8080</code>. Default Application <code class="highlighter-rouge">/</code>.</p>
+
+
+
+
+<p style="margin-top: 7rem;">
+	
+<a href="/bookmarked/2017/06/11/steve-jobs-standford-commencement-speech.html"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+
+
+
+<a class="pull-right" href="/2017/12/13/java-web.html"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+
+
+</p>
+
+		</section>
+	</div>
+
+	<footer>
+	<div class="container small">
+		&copy;
+		<span><script type="text/javascript">document.write(new Date().getFullYear());</script></span>
+		All Rights Reserved &sdot;
+
+		<a href="/stats.html"><span class="glyphicon glyphicon-stats"></span></a> &sdot;
+
+		<a href="mailto:lucas.li@sdchina.org.cn"><span class="glyphicon glyphicon-envelope"></span></a>
+
+
+		<span class="pull-right"><a href="javascript:;" onclick="chn()">中文</a> / <a href="javascript:;" onclick="eng()">English</a></span>
+	</div>
+</footer>
+</body>
+</html>

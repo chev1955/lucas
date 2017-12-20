@@ -1,0 +1,11 @@
+{% if page.previous.url %}
+<a href="{{ site.baseurl }}{{ page.previous.url }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+{% else %}
+<span class="glyphicon glyphicon-circle-arrow-left"></span>
+{% endif %}
+
+{% if page.next.url %}
+<a class="pull-right" href="{{ site.baseurl }}{{ page.next.url }}"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+{% else %}
+<span class="glyphicon glyphicon-circle-arrow-right pull-right"></span>
+{% endif %}
