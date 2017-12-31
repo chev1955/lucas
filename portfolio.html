@@ -1,0 +1,31 @@
+---
+layout: default
+title: "作品"
+---
+
+
+
+<p class="page-title">
+	<span class="glyphicon glyphicon-folder-open"></span> &nbsp;
+	<span class="chn">作品</span>
+	<span class="eng">PORTFOLIO</span>
+</p>
+
+
+
+
+<section>
+	<div class="waterfall">
+		{% for item in site.data.portfolio %}
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<a href="{{ site.baseurl }}/assets/img/portfolio/{{ item.src }}.jpg" target="_blank"><img src="{{ site.baseurl }}/assets/img/portfolio/thumb/{{ item.src }}.jpg"></a>
+			</div>
+			<div class="panel-footer slim">
+				<span class="chn">{{ item.chn }}</span>
+				<span class="eng">{{ item.eng }}</span>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</section>

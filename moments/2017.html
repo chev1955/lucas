@@ -1,0 +1,63 @@
+---
+layout: default
+title: "动态"
+---
+
+
+
+<p class="page-title">
+	<span class="glyphicon glyphicon-eye-open"></span> &nbsp;
+	<span class="chn">动态</span>
+	<span class="eng">MOMENTS</span>
+</p>
+
+
+
+
+<section>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="VivaTimeline">
+				<dl>
+					<div class="pull-right">
+						<a href="{{ site.baseurl }}/moments/2018.html">&#9656; 2018</a>
+					</div>
+
+					<dt class="slim">2017</dt>
+
+
+					{% for item in site.data.moments.timeline2017 %}
+					{% assign mod = forloop.index | modulo: 2 %}
+					<dd class="{% if mod == 0 %}pos-right{% else %}pos-left{% endif %} clearfix">
+						<div class="circ"></div>
+						<div class="time">{{ item.src }}</div>
+						<div class="events">
+							<div class="events-header">
+								<img class="img-responsive" src="{{ site.baseurl }}/assets/img/moments/2017/{{ item.src }}.jpg" />
+							</div>
+							<div class="events-body">
+								{{ item.txt }}
+							</div>        
+						</div>
+					</dd>
+					{% endfor %}
+				</dl>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.VivaTimeline').vivaTimeline({
+		carousel: false,
+		carouselTime: 3000
+	});
+});
+</script>
