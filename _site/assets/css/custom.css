@@ -62,7 +62,7 @@ post img {
 .x-small {
 	font-size: 70%
 }
-.eng {
+.chn {
 	display: none;
 }
 
@@ -161,9 +161,9 @@ ul.about-list li {
 
 
 
-
-
-
+.cover-img:hover {
+	opacity: 0.8;
+}
 
 
 
